@@ -7,14 +7,14 @@ data_directory = '../Dataset/train_data'
 
 # Define image data generator for preprocessing and augmentation
 datagen = ImageDataGenerator(
-    rescale=1./99,  # Normalize pixel values to [0, 1]
+    rescale=1./255,  # Normalize pixel values to [0, 1]
     validation_split=0.2  # Percentage of data to use for validation
 )
 
 # Load and split the dataset into training and testing sets
 train_generator = datagen.flow_from_directory(
     data_directory,
-    target_size=(100, 100),
+    target_size=(256, 256),
     batch_size=32,
     class_mode='sparse',
     subset='training',
@@ -23,7 +23,7 @@ train_generator = datagen.flow_from_directory(
 
 validation_generator = datagen.flow_from_directory(
     data_directory,
-    target_size=(100, 100),
+    target_size=(256, 256),
     batch_size=32,
     class_mode='sparse',
     subset='validation',
@@ -32,9 +32,11 @@ validation_generator = datagen.flow_from_directory(
 
 # Define model architecture
 model = Sequential([
-    Conv2D(32, (3, 3), activation='relu', input_shape=(100, 100, 3)),
+    Conv2D(32, (3, 3), activation='relu', input_shape=(256, 256, 3)),
     MaxPooling2D((2, 2)),
     Conv2D(64, (3, 3), activation='relu'),
+    MaxPooling2D((2, 2)),
+    Conv2D(128, (3, 3), activation='relu'),
     MaxPooling2D((2, 2)),
     Flatten(),
     Dense(128, activation='relu'),

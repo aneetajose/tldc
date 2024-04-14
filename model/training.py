@@ -52,4 +52,4 @@ model.compile(optimizer='adam',
 model.fit(train_generator, epochs=10, validation_data=validation_generator)
 
 # Save the model
-model.save('classifier.keras')
+# model.save('classifier.keras')

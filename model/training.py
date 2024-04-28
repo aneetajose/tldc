@@ -33,11 +33,11 @@ validation_generator = datagen.flow_from_directory(
 # Define model architecture
 model = Sequential([
     Conv2D(32, (3, 3), activation='relu', input_shape=(256, 256, 3)),
-    MaxPooling2D((2, 2)),
+    MaxPooling2D((2, 2), (2, 2)),
     Conv2D(64, (3, 3), activation='relu'),
-    MaxPooling2D((2, 2)),
+    MaxPooling2D((2, 2), (2, 2)),
     Conv2D(128, (3, 3), activation='relu'),
-    MaxPooling2D((2, 2)),
+    MaxPooling2D((2, 2), (2, 2)),
     Flatten(),
     Dense(128, activation='relu'),
     Dense(2, activation='softmax')
@@ -52,4 +52,4 @@ model.compile(optimizer='adam',
 model.fit(train_generator, epochs=10, validation_data=validation_generator)
 
 # Save the model
-# model.save('classifier.keras')
+model.save('classifier.keras')

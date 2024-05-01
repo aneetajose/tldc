@@ -1,5 +1,4 @@
 import os
-import matplotlib.pyplot as plt
 import numpy as np
 from keras.models import load_model
 from PIL import Image
@@ -18,10 +17,6 @@ def detect(img_path):
     img_array = np.array(img_resized)
     img_array_normalized = img_array / 255.0
     img_array_normalized = np.expand_dims(img_array_normalized, axis=0)  # Add batch dimension
-
-    # plt.imshow(img)
-    # plt.axis('off')
-    # plt.show()
 
     # Make prediction
     predictions = model.predict(img_array_normalized)

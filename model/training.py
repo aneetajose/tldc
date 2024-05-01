@@ -1,6 +1,7 @@
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 from keras.preprocessing.image import ImageDataGenerator
+import matplotlib.pyplot as plt
 
 # Define the directory where your dataset is stored
 data_directory = '../Dataset/train_data'
@@ -14,7 +15,7 @@ datagen = ImageDataGenerator(
 # Load and split the dataset into training and testing sets
 train_generator = datagen.flow_from_directory(
     data_directory,
-    target_size=(256, 256),
+    target_ssize=(256, 256),
     batch_size=32,
     class_mode='sparse',
     subset='training',
@@ -49,7 +50,19 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 
 # Train the model
-model.fit(train_generator, epochs=10, validation_data=validation_generator)
+hist = model.fit(train_generator, epochs=10, validation_data=validation_generator)
 
 # Save the model
 model.save('classifier.keras')
+
+test_loss, test_acc = model.evaluate(validation_generator)
+print('Test accuracy:', test_acc)
+
+plt.figure(figsize=(14, 5))
+plt.subplot(1, 2, 1)
+plt.plot(hist.history['accuracy'], label='Training Accuracy ')
+plt.plot(hist.history['val_accuracy'], label='Validation Accuracy')
+plt.title('Training and Validation Accuracy')
+plt.xlabel('Epochs')
+plt.ylabel('Accuracy')
+plt.legend()

@@ -10,7 +10,7 @@ def detect(img_path):
     model_dir = os.path.join(current_dir, '..', 'model')
     model_path = os.path.join(model_dir, 'classifier.keras')
     model = load_model(model_path)
-    labels = ["Bacterial_Spot", "Yellow_Curl_Leaf"]
+    labels = ["Bacterial Spot", "Yellow Leaf Curl Virus"]
 
     img = Image.open(img_path)
     img_resized = img.resize((256, 256))
